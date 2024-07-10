@@ -1,6 +1,6 @@
 export interface IResponse {
-    paging: IPaging
-    data: IInstrument[]
+    paging: IPaging;
+    data: IInstrument[];
 }
 
 export interface IAuthResponse {
@@ -21,6 +21,33 @@ export interface IUpdateSubscription {
     subscribe:    boolean;
     kinds:        string[];
 }
+
+export interface ICountBarRequest {
+    instrumentId: string;
+    provider: string;
+    interval: number;
+    periodicity: string;
+    barsCount: number;
+}
+
+export interface IDataResponse<T> {
+    data: T[];
+}
+
+export interface IPriceChange {
+    t: Date;
+    // open
+    o: number;
+    // high
+    h: number;
+    // last
+    l: number;
+    // close
+    c: number;
+    // volume
+    v: number;
+}
+
 
 export interface IInstrumentPriceUpdate {
     type:         string;
@@ -52,36 +79,6 @@ export interface IInstrument {
     tickSize: number
     currency: string
     baseCurrency: string
-    mappings: Mappings
+    mappings: any
 }
 
-export interface Mappings {
-    "active-tick": ActiveTick;
-    simulation?:   ActiveTick;
-    oanda:         ActiveTick;
-    dxfeed?:       ActiveTick;
-}
-
-export interface ActiveTick {
-    symbol: string
-    exchange: string
-    defaultOrderSize: number
-}
-
-export interface Simulation {
-    symbol: string
-    exchange: string
-    defaultOrderSize: number
-}
-
-export interface Oanda {
-    symbol: string
-    exchange: string
-    defaultOrderSize: number
-}
-
-export interface Dxfeed {
-    symbol: string
-    exchange: string
-    defaultOrderSize: number
-}

@@ -16,6 +16,7 @@ import { JwtInterceptor } from "./interceptors/jwt.interceptor";
 import { RouterOutlet } from "@angular/router";
 import { TokenComponent } from "./components/token/token.component";
 import { AppRoutingModule } from "./app.routing.module";
+import { LineChartModule } from "@swimlane/ngx-charts";
 
 @NgModule({
   declarations: [
@@ -26,18 +27,19 @@ import { AppRoutingModule } from "./app.routing.module";
       PriceChartComponent,
       TokenComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    RouterOutlet,
-    AppRoutingModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatInputModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        RouterOutlet,
+        AppRoutingModule,
+        FormsModule,
+        LineChartModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

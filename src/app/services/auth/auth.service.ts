@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { IAuthResponse } from "../../models/api.model";
 import { Observable, tap } from "rxjs";
+import { Router } from "@angular/router";
 
 const TOKEN = "AUTH_TOKEN";
 
@@ -12,15 +13,18 @@ const TOKEN = "AUTH_TOKEN";
 export class AuthService {
 
     constructor(
-        private _http: HttpClient
+        private _http: HttpClient,
+        private _router: Router
     ) {}
 
     init(): void {
         const token = this.getToken();
-        if (token) {
-            console.log('token + ', token);
-        } else {
-            this.authenticate().subscribe(response => console.log(response));
+        if (!token) {
+            this.authenticate().subscribe(response => {
+                const accessToken = response.access_token;
+                this.storeToken(accessToken);
+                this._router.navigateByUrl('/dashboard');
+            });
         }
     }
     getToken(): string {
@@ -28,7 +32,7 @@ export class AuthService {
     }
 
     storeToken(token: string): void {
-        localStorage.removeItem(TOKEN);
+        this.resetToken();
         localStorage.setItem(TOKEN, token);
     }
 

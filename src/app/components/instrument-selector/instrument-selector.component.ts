@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import { IInstrument } from "../../models/api.model";
 import { map, Observable, startWith } from "rxjs";
 import { ApiService } from "../../services/rest/api.service";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
+import { InstrumentService } from "../../services/instrument/instrument.service";
 
 @Component({
   selector: 'app-instrument-selector',
@@ -15,11 +16,9 @@ export class InstrumentSelectorComponent implements OnInit {
     options: IInstrument[] = [];
     filteredOptions!: Observable<IInstrument[]>;
 
-    @Output()
-    instrumentEventEmitter: EventEmitter<IInstrument> = new EventEmitter<IInstrument>();
-
     constructor(
-        private _api: ApiService
+        private _api: ApiService,
+        private _instrument: InstrumentService
     ) {
     }
 
@@ -48,6 +47,6 @@ export class InstrumentSelectorComponent implements OnInit {
     }
 
     onInstrumentSelected($event: MatAutocompleteSelectedEvent) {
-        this.instrumentEventEmitter.emit($event.option.value);
+        this._instrument.onInstrumentChanged($event.option.value);
     }
 }

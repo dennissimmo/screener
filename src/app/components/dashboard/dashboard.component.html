@@ -1,6 +1,6 @@
 <div class="dashboard">
     <div class="instrument">
-        <app-instrument-selector (instrumentEventEmitter)="onInstrumentChanged($event)"></app-instrument-selector>
+        <app-instrument-selector></app-instrument-selector>
         <button *ngIf="!updatesSubscription" mat-raised-button (click)="subscribe()">Subscribe</button>
         <button *ngIf="updatesSubscription" mat-raised-button (click)="unsubscribe()">Unsubscribe</button>
     </div>
@@ -9,7 +9,7 @@
         <app-market-screen [update]="instrumentUpdate" [instrument]="instrument"></app-market-screen>
     </div>
     <div class="chart">
-        Charting data:
+        <span *ngIf="instrument">Charting data:</span>
         <app-price-chart></app-price-chart>
     </div>
 </div>

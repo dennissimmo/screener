@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WebsocketService } from "../../services/websocket/websocket.service";
 import { IInstrument, IInstrumentPriceUpdate, IUpdateSubscription } from "../../models/api.model";
 import { Subscription } from "rxjs";
+import { InstrumentService } from "../../services/instrument/instrument.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -16,11 +17,14 @@ export class DashboardComponent implements OnInit {
   updatesSubscription: Subscription | null = null;
 
   constructor(
-      private _websocket: WebsocketService
+      private _websocket: WebsocketService,
+      private _instrument: InstrumentService
   ) {
   }
   ngOnInit(): void {
     this._websocket.connect();
+    this._instrument.instrumentChanged
+        .subscribe(instrument => this.onInstrumentChanged(instrument));
   }
 
   subscribe() {
@@ -39,14 +43,11 @@ export class DashboardComponent implements OnInit {
     this._websocket.subscribeForPriceUpdate(lastPriceSubscription);
     this.updatesSubscription = this._websocket.instrumentUpdates$.subscribe(update => {
       this.instrumentUpdate = update;
-      console.log(this.instrumentUpdate);
     });
   }
 
   onInstrumentChanged(instrument: IInstrument) {
-    this.unsubscribe();
     this.instrument = instrument;
-    console.log(this.instrument);
   }
 
   unsubscribe(): void {
