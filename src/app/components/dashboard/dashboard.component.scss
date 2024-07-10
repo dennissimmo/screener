@@ -1,0 +1,11 @@
+.dashboard {
+  min-width: 600px;
+  padding: 1rem;
+  border: 1px solid black;
+
+  .instrument {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

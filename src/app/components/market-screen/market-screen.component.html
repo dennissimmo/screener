@@ -1,0 +1,13 @@
+<div class="block">
+    <div class="item">
+        Symbol: {{ instrument.symbol }}
+    </div>
+    <ng-container *ngIf="update">
+        <div class="item">
+            Price: {{ price | currency }}
+        </div>
+        <div class="item">
+            Time: {{ timestamp | date: 'MMM d, h:mm a' }}
+        </div>
+    </ng-container>
+</div>
